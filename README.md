@@ -42,6 +42,5 @@ SmartResumeAI is an AI-powered tool that helps you tailor your resume according 
 Bhavana Battula
 
 
-## 📷 Preview
-![SmartResumeAI Preview](https://huggingface.co/spaces/bhavana216/SmartResumeAI/resolve/main/preview.png)
+
 
