@@ -32,9 +32,3 @@ Just upload your resume (PDF) and paste the job description — SmartResumeAI wi
 
 ---
 
-## How to Run Locally
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/SmartResumeAI.git
-   cd SmartResumeAI
