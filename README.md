@@ -9,26 +9,39 @@ app_file: app.py
 pinned: false
 license: mit
 ---
-# SmartResumeAI
+# SmartResumeAI ✨
 
-**SmartResumeAI** is an intelligent resume analyzer that helps you optimize your resume for any job you want.  
-Just upload your resume (PDF) and paste the job description — SmartResumeAI will analyze and give you instant feedback.
+🚀 Optimize your resume for the job you want.
 
----
-
-## Features
-- Upload your Resume in PDF format.
-- Paste any Job Description.
-- Get instant analysis and feedback.
-- Simple and user-friendly interface.
-- Built with **Streamlit** and deployed on **Hugging Face Spaces**.
+SmartResumeAI is an AI-powered tool that helps you tailor your resume according to any job description. Upload your resume and the job description, and let the AI suggest improvements!
 
 ---
 
-## Demo
-
-[**Try SmartResumeAI here**](https://huggingface.co/spaces/bhavana216/SmartResumeAI)  
-*(Click the link to use the live app.)*
+## 🚀 App Link
+👉 [Try SmartResumeAI](https://huggingface.co/spaces/bhavana216/SmartResumeAI)
 
 ---
+
+## 📄 Features
+- Upload your resume (PDF)
+- Paste a job description
+- Get instant suggestions
+- Optimize resume for better shortlisting chances
+
+---
+
+## 🛠️ Tech Stack
+- Python
+- Gradio
+- Hugging Face Spaces
+- OpenAI API (or similar LLM)
+
+---
+
+## 👩‍💻 Developed by
+Bhavana Battula
+
+
+## 📷 Preview
+![SmartResumeAI Preview](https://huggingface.co/spaces/bhavana216/SmartResumeAI/resolve/main/preview.png)
 
