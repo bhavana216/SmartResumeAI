@@ -1,0 +1,18 @@
+# Virtual Environment
+.venv/
+venv/
+ENV/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment Variables & Secrets (Crucial to prevent API leak!)
+.env
+.env*.local
+
+# Local User Data / Output Reports
+Jane_Doe_Resume.pdf
+SmartResumeAI_Analysis_*.pdf
+Cover_Letter_Draft.txt
