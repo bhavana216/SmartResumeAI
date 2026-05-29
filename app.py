@@ -166,6 +166,40 @@ section[data-testid="stSidebar"] .stMarkdown h3 {
     box-shadow: 0 0 10px rgba(6, 182, 212, 0.15) !important;
 }
 
+/* File uploader premium layout */
+div[data-testid="stFileUploader"] {
+    background-color: rgba(15, 23, 42, 0.4) !important;
+    border: 1.5px dashed rgba(6, 182, 212, 0.25) !important;
+    border-radius: 12px !important;
+    padding: 14px !important;
+    transition: all 0.3s ease;
+}
+
+div[data-testid="stFileUploader"]:hover {
+    border-color: #06b6d4 !important;
+    background-color: rgba(6, 182, 212, 0.02) !important;
+}
+
+/* Sidebar selectbox and text input custom styling */
+div[data-testid="stSidebar"] div.stSelectbox div[data-baseweb="select"] {
+    background-color: rgba(15, 23, 42, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 10px !important;
+    color: #f8fafc !important;
+}
+
+div[data-testid="stSidebar"] div.stTextInput input {
+    background-color: rgba(15, 23, 42, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 10px !important;
+    color: #f8fafc !important;
+}
+
+div[data-testid="stSidebar"] div.stTextInput input:focus {
+    border-color: #06b6d4 !important;
+    box-shadow: 0 0 8px rgba(6, 182, 212, 0.15) !important;
+}
+
 /* Metric card specific styling */
 .metric-container {
     background: rgba(30, 41, 59, 0.3);
@@ -501,13 +535,24 @@ api_key_input = st.sidebar.text_input(
     value=""
 )
 
-# Retrieve key from variable fallback
-gemini_api_key = api_key_input if api_key_input else os.environ.get("GEMINI_API_KEY")
+# Retrieve key from variable fallback and identify its source
+if api_key_input:
+    gemini_api_key = api_key_input
+    key_source = "User Input"
+elif os.environ.get("GEMINI_API_KEY"):
+    gemini_api_key = os.environ.get("GEMINI_API_KEY")
+    key_source = "Cloud Secrets / Environment"
+else:
+    gemini_api_key = None
+    key_source = None
 
 if not gemini_api_key:
-    st.sidebar.warning("⚠️ No Gemini API Key found. Configure it above or in your local `.env` file to start.")
+    st.sidebar.warning("⚠️ No Gemini API Key found. Configure it above or in your cloud workspace to start.")
 else:
-    st.sidebar.success("⚡ Gemini Client Active!")
+    if key_source == "Cloud Secrets / Environment":
+        st.sidebar.success("⚡ Gemini Client Active!\n*(Loaded from Cloud Secrets)*")
+    else:
+        st.sidebar.success("⚡ Gemini Client Active!\n*(Using Manual Input Key)*")
 
 # Model Picker
 model_choice = st.sidebar.selectbox(
@@ -528,12 +573,12 @@ st.sidebar.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Main Application Frame
+# Main Application Frame - Premium Centered Hero
 st.markdown("""
-<div style='margin-bottom: 30px;'>
-    <h1 style='font-size: 2.8rem; font-weight: 800; line-height: 1.1; margin: 0;'>Optimize Your <span class='glow-text-cyan'>Resume</span>.</h1>
-    <h1 style='font-size: 2.8rem; font-weight: 800; line-height: 1.1; margin: 0;'>Land the <span class='glow-text-violet'>Interview</span>.</h1>
-    <p style='color: #94a3b8; font-size: 1.1rem; margin-top: 10px;'>Leverage deep neural parsing to align your qualifications perfectly with any job description.</p>
+<div style='margin-bottom: 35px; text-align: center; background: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.1) 0%, rgba(0,0,0,0) 80%); padding: 35px 20px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.02);'>
+    <h1 style='font-size: 3.2rem; font-weight: 800; line-height: 1.1; margin: 0; letter-spacing: -0.03em;'>Optimize Your <span class='glow-text-cyan'>Resume</span>.</h1>
+    <h1 style='font-size: 3.2rem; font-weight: 800; line-height: 1.1; margin: 5px 0 0 0; letter-spacing: -0.03em;'>Land the <span class='glow-text-violet'>Interview</span>.</h1>
+    <p style='color: #94a3b8; font-size: 1.15rem; margin-top: 15px; max-width: 650px; margin-left: auto; margin-right: auto; font-weight: 400; line-height: 1.5;'>Leverage deep semantic neural parsing to align your qualifications perfectly with any target role.</p>
 </div>
 """, unsafe_allow_html=True)
 
