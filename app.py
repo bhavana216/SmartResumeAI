@@ -12,12 +12,12 @@ from fpdf import FPDF
 # Load environment variables
 load_dotenv()
 
-# Set up page config
+# Set up page config with collapsed sidebar
 st.set_page_config(
     page_title="SmartResumeAI ✨ | The Premium Resume Optimizer",
     page_icon="✨",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 # Custom High-Fidelity CSS styling
@@ -48,17 +48,7 @@ st.markdown("""
     background: #334155;
 }
 
-/* Sidebar styling overrides */
-section[data-testid="stSidebar"] {
-    background-color: #090d16 !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
-}
 
-section[data-testid="stSidebar"] .stMarkdown h1, 
-section[data-testid="stSidebar"] .stMarkdown h2,
-section[data-testid="stSidebar"] .stMarkdown h3 {
-    color: #f8fafc !important;
-}
 
 /* Modern Glassmorphic Container Cards */
 .glass-card {
@@ -180,25 +170,7 @@ div[data-testid="stFileUploader"]:hover {
     background-color: rgba(6, 182, 212, 0.02) !important;
 }
 
-/* Sidebar selectbox and text input custom styling */
-div[data-testid="stSidebar"] div.stSelectbox div[data-baseweb="select"] {
-    background-color: rgba(15, 23, 42, 0.5) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 10px !important;
-    color: #f8fafc !important;
-}
 
-div[data-testid="stSidebar"] div.stTextInput input {
-    background-color: rgba(15, 23, 42, 0.5) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 10px !important;
-    color: #f8fafc !important;
-}
-
-div[data-testid="stSidebar"] div.stTextInput input:focus {
-    border-color: #06b6d4 !important;
-    box-shadow: 0 0 8px rgba(6, 182, 212, 0.15) !important;
-}
 
 /* Metric card specific styling */
 .metric-container {
@@ -516,34 +488,26 @@ def build_pdf_report(data, resume_name):
         
     return pdf.output()
 
-# Application Sidebar Configuration
-st.sidebar.markdown("""
-<div style='text-align: center; margin-bottom: 20px;'>
-    <h1 style='font-size: 1.8rem; font-weight: 800; margin: 0; color: #f8fafc;'>SmartResume<span style='color: #06b6d4;'>AI</span></h1>
-    <p style='color: #64748b; font-size: 0.85rem;'>Modern Resume Engineering Dashboard</p>
-</div>
-""", unsafe_allow_html=True)
-
 # Retrieve Gemini API Key silently from environment/secrets
 gemini_api_key = os.environ.get("GEMINI_API_KEY")
 
 # Set the default model choice silently
 model_choice = "gemini-2.5-flash"
 
-st.sidebar.markdown("""
-<div style='background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 12px; font-size: 0.8rem; color: #94a3b8;'>
-    <strong>Stack Details:</strong><br>
-    - Python 3.11.0<br>
-    - Streamlit Front-End<br>
-    - Google Gemini AI Client<br>
-    - Plotly Visual Graphics<br>
-    - FPDF2 Report Generation
-</div>
-""", unsafe_allow_html=True)
 
-# Main Application Frame - Premium Centered Hero
+# Main Application Frame - Premium Brand Bar & Hero Section
 st.markdown("""
-<div style='margin-bottom: 35px; text-align: center; background: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.1) 0%, rgba(0,0,0,0) 80%); padding: 35px 20px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.02);'>
+<div style='display: flex; justify-content: space-between; align-items: center; padding: 10px 0 20px 0; margin-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);'>
+    <div style='display: flex; align-items: center; gap: 8px;'>
+        <span style='font-size: 1.6rem; font-weight: 800; color: #f8fafc; letter-spacing: -0.02em; font-family: "Plus Jakarta Sans", sans-serif;'>SmartResume<span style='color: #06b6d4;'>AI</span></span>
+        <span style='background: rgba(6, 182, 212, 0.1); color: #06b6d4; font-size: 0.65rem; font-weight: 700; padding: 3px 8px; border-radius: 9999px; border: 1px solid rgba(6, 182, 212, 0.15); letter-spacing: 0.05em;'>PREMIUM</span>
+    </div>
+    <div style='color: #64748b; font-size: 0.85rem; font-weight: 500; font-family: "Plus Jakarta Sans", sans-serif;'>
+        Modern Resume Engineering Dashboard
+    </div>
+</div>
+
+<div style='margin-bottom: 35px; text-align: center; background: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.08) 0%, rgba(0,0,0,0) 80%); padding: 35px 20px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.02);'>
     <h1 style='font-size: 3.2rem; font-weight: 800; line-height: 1.1; margin: 0; letter-spacing: -0.03em;'>Optimize Your <span class='glow-text-cyan'>Resume</span>.</h1>
     <h1 style='font-size: 3.2rem; font-weight: 800; line-height: 1.1; margin: 5px 0 0 0; letter-spacing: -0.03em;'>Land the <span class='glow-text-violet'>Interview</span>.</h1>
     <p style='color: #94a3b8; font-size: 1.15rem; margin-top: 15px; max-width: 650px; margin-left: auto; margin-right: auto; font-weight: 400; line-height: 1.5;'>Leverage deep semantic neural parsing to align your qualifications perfectly with any target role.</p>
@@ -931,3 +895,15 @@ with tab_letter:
             """, unsafe_allow_html=True)
             
     st.markdown("</div>", unsafe_allow_html=True)
+
+# Centered elegant page footer
+st.markdown("""
+<div style='margin-top: 60px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 30px; padding-bottom: 20px; font-family: "Plus Jakarta Sans", sans-serif;'>
+    <p style='color: #64748b; font-size: 0.85rem; margin: 0;'>
+        <strong>SmartResumeAI</strong> | Modern Resume Engineering Dashboard | Powered by Google Gemini AI
+    </p>
+    <p style='color: #475569; font-size: 0.75rem; margin: 5px 0 0 0; letter-spacing: 0.05em;'>
+        ENGINE VERSION: 2.5-FLASH | STACK: STREAMLIT • PLOTLY • PYPDF • FPDF2
+    </p>
+</div>
+""", unsafe_allow_html=True)
