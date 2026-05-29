@@ -524,44 +524,12 @@ st.sidebar.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-st.sidebar.markdown("---")
+# Retrieve Gemini API Key silently from environment/secrets
+gemini_api_key = os.environ.get("GEMINI_API_KEY")
 
-# API Configuration Panel
-st.sidebar.subheader("🔑 API Configuration")
-api_key_input = st.sidebar.text_input(
-    "Google Gemini API Key",
-    type="password",
-    help="Grab an API key for free from Google AI Studio",
-    value=""
-)
+# Set the default model choice silently
+model_choice = "gemini-2.5-flash"
 
-# Retrieve key from variable fallback and identify its source
-if api_key_input:
-    gemini_api_key = api_key_input
-    key_source = "User Input"
-elif os.environ.get("GEMINI_API_KEY"):
-    gemini_api_key = os.environ.get("GEMINI_API_KEY")
-    key_source = "Cloud Secrets / Environment"
-else:
-    gemini_api_key = None
-    key_source = None
-
-if not gemini_api_key:
-    st.sidebar.warning("⚠️ No Gemini API Key found. Configure it above or in your cloud workspace to start.")
-else:
-    if key_source == "Cloud Secrets / Environment":
-        st.sidebar.success("⚡ Gemini Client Active!\n*(Loaded from Cloud Secrets)*")
-    else:
-        st.sidebar.success("⚡ Gemini Client Active!\n*(Using Manual Input Key)*")
-
-# Model Picker
-model_choice = st.sidebar.selectbox(
-    "🤖 Analytics Engine",
-    ["gemini-2.5-flash", "gemini-2.5-pro"],
-    help="Flash is incredibly fast and optimized for dashboards. Pro is suited for rigorous phrasing calculations."
-)
-
-st.sidebar.markdown("---")
 st.sidebar.markdown("""
 <div style='background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 12px; font-size: 0.8rem; color: #94a3b8;'>
     <strong>Stack Details:</strong><br>
@@ -622,7 +590,7 @@ with tab_dashboard:
         
         if analyze_button:
             if not gemini_api_key:
-                st.error("Please configure a Google Gemini API Key in the sidebar or `.env` file first.")
+                st.error("Google Gemini API Key is missing. Please configure it in your cloud secrets or local .env file.")
             elif not uploaded_pdf:
                 st.warning("Please upload your PDF resume first.")
             elif not job_description_raw.strip():
@@ -850,7 +818,7 @@ with tab_bullet:
     with col_opt_out:
         if optimize_bullet_button:
             if not gemini_api_key:
-                st.error("Please configure a Google Gemini API Key in the sidebar or `.env` file first.")
+                st.error("Google Gemini API Key is missing. Please configure it in your cloud secrets or local .env file.")
             elif not bullet_input.strip():
                 st.warning("Please paste a bullet point first.")
             elif not target_jd_snippet.strip():
@@ -920,7 +888,7 @@ with tab_letter:
     with col_let_out:
         if generate_letter_button:
             if not gemini_api_key:
-                st.error("Please configure a Google Gemini API Key in the sidebar or `.env` file first.")
+                st.error("Google Gemini API Key is missing. Please configure it in your cloud secrets or local .env file.")
             elif not let_resume_text.strip():
                 st.warning("Please upload a resume or paste details on the left first.")
             elif not let_jd_text.strip():
